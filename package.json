@@ -1,0 +1,46 @@
+{
+  "name": "@smpx/cfg",
+  "version": "1.0.0",
+  "description": "Configuration management for node.js",
+  "main": "cfg.js",
+  "scripts": {
+    "build": "true",
+    "lint": "eslint cfg.js",
+    "test": "true",
+    "test-only": "true",
+    "compile": "tsc",
+    "prepublish": "yarn lint && yarn build && yarn test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smartprix/cfg.git"
+  },
+  "keywords": [
+    "cfg",
+    "config",
+    "smpx",
+    "smartprix"
+  ],
+  "author": "Hitesh Khandelwal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smartprix/cfg/issues"
+  },
+  "homepage": "https://github.com/smartprix/cfg#readme",
+  "dependencies": {
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.7.0",
+    "eslint-config-smartprix": "^3.4.2",
+    "mocha": "^5.2.0"
+  },
+  "eslintConfig": {
+    "extends": "smartprix",
+    "env": {
+      "node": true,
+      "browser": false
+    }
+  }
+}

@@ -1,0 +1,15 @@
+node_modules
+coverage
+.vscode
+.idea
+src
+test
+garbage
+docs
+yarn.lock
+package-lock.json
+.editorconfig
+jsdoc.json
+out
+.travis.yml
+bench
