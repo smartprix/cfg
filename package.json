@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/smartprix/cfg#readme",
   "dependencies": {
+    "commander": "^2.19.0",
     "lodash": "^4.17.11"
   },
   "devDependencies": {
@@ -44,6 +45,9 @@
     "env": {
       "node": true,
       "browser": false
+    },
+    "rules": {
+      "vue/script-indent": 0
     }
   }
 }
