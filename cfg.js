@@ -232,12 +232,6 @@ cfg.read = function (key) {
 
 /**
  * @memberof config
- * @return {string}
- */
-cfg.getEnv = env;
-
-/**
- * @memberof config
  * @return {boolean}
  */
 cfg.isProduction = function () {
@@ -281,15 +275,15 @@ cfg.isDev = function () {
  * @memberof config
  * @returns {string}
  */
-cfg.env = cfg.getEnv;
+cfg.env = env;
+/**
+ * @memberof config
+ * @return {string}
+ */
+cfg.getEnv = env;
 
-cfg.is_production = cfg.isProduction;
 cfg.isProd = cfg.isProduction;
-cfg.is_prod = cfg.isProduction;
-cfg.is_staging = cfg.isStaging;
 cfg.isProdLike = cfg.isProductionLike;
-cfg.is_dev = cfg.isDev;
 cfg.isDevelopment = cfg.isDev;
-cfg.is_test = cfg.isTest;
 
 module.exports = cfg;

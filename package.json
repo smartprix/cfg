@@ -6,8 +6,8 @@
   "scripts": {
     "build": "true",
     "lint": "eslint cfg.js",
-    "test": "true",
-    "test-only": "true",
+    "test": "npm run lint && npm run test-only",
+    "test-only": "NODE_ENV=test mocha --slow 0 --exit test/*.test.js",
     "compile": "tsc",
     "prepublish": "yarn lint && yarn build && yarn test"
   },
