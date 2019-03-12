@@ -1,9 +1,8 @@
 const fs = require('fs');
 const _ = require('lodash');
 
-let config = {};
+let config;
 const fileCache = {};
-let configRead = false;
 
 const env = function () {
 	return process.env.NODE_ENV || 'development';
@@ -65,8 +64,8 @@ function readEnvVariables() {
 }
 
 function readDefaultConfigFiles() {
-	if (configRead) return;
-	configRead = true;
+	if (config) return;
+	config = {};
 
 	cfg.file(`${process.cwd()}/config.js`, {ignoreNotFound: true});
 	cfg.file(`${process.cwd()}/config.${env()}.js`, {ignoreNotFound: true});
@@ -76,6 +75,7 @@ function readDefaultConfigFiles() {
 	if (config.$privateConfigFile) {
 		cfg.file(config.$privateConfigFile, {ignoreNotFound: true});
 	}
+
 	readEnvVariables();
 }
 /**
@@ -176,8 +176,6 @@ cfg.file = function (file, options = {}) {
 	if (!file.startsWith('/')) {
 		throw new Error('Only absolute paths are allowed');
 	}
-
-	if (!configRead) readDefaultConfigFiles();
 
 	try {
 		// eslint-disable-next-line global-require, import/no-dynamic-require
