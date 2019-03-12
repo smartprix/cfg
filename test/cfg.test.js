@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-expressions */
+/* eslint-env mocha, node */
 
 const {expect} = require('chai');
-const cfg = require('../cfg');
+const cfg = require('../index');
 
 describe('cfg', () => {
 	it('should get and set values', async () => {

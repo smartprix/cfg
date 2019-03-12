@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Configuration management for node.js",
   "main": "cfg.js",
+  "browser": {
+    "./index.js": "./browser.js"
+  },
   "scripts": {
     "build": "true",
     "lint": "eslint cfg.js",

@@ -14,26 +14,33 @@ const env = function () {
  * @namespace config
  */
 
-// merge configs, takes care of getters while merging
-function merge(conf, confPrivate) {
-	if (!confPrivate) return conf;
+function isObject(obj) {
+	return obj === Object(obj);
+}
 
-	Object.keys(confPrivate).forEach((key) => {
-		if (Object.prototype.hasOwnProperty.call(conf, key)) {
-			if (confPrivate[key] === Object(confPrivate[key])) {
-				if (conf[key] !== Object(conf[key])) conf[key] = {};
-				merge(conf[key], confPrivate[key]);
-			}
-			else {
-				Object.defineProperty(conf, key, Object.getOwnPropertyDescriptor(confPrivate, key));
-			}
+// merge configs, takes care of getters while merging
+function merge(obj, src) {
+	if (!src) return obj;
+
+	Object.keys(src).forEach((key) => {
+		const objVal = Object.getOwnPropertyDescriptor(obj, key);
+		const srcVal = Object.getOwnPropertyDescriptor(src, key);
+
+		if (
+			objVal &&
+			!objVal.get &&
+			!srcVal.get &&
+			isObject(srcVal.value) &&
+			isObject(objVal.value)
+		) {
+			merge(obj[key], src[key]);
+			return;
 		}
-		else {
-			Object.defineProperty(conf, key, Object.getOwnPropertyDescriptor(confPrivate, key));
-		}
+
+		Object.defineProperty(obj, key, srcVal);
 	});
 
-	return conf;
+	return obj;
 }
 
 /**
