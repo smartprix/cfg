@@ -2,7 +2,7 @@
   "name": "@smpx/cfg",
   "version": "1.1.0",
   "description": "Configuration management for node.js",
-  "main": "cfg.js",
+  "main": "index.js",
   "browser": {
     "./index.js": "./browser.js"
   },
