@@ -97,7 +97,7 @@ cfg.get = function (key, defaultValue) {
 
 /**
  * @memberof config
- * @return {any}
+ * @return {object}
  */
 cfg._getConfig = function () {
 	return config;
@@ -106,7 +106,7 @@ cfg._getConfig = function () {
 /** set values in global config
  * you can also give key as an object to assign all key values from it
  * @memberof config
- * @return {null}
+ * @return {any}
  */
 cfg.set = function (key, value) {
 	readDefaultConfigFiles();
@@ -128,7 +128,7 @@ cfg.set = function (key, value) {
  * if a key already exists then it is merged with new value
  * if obj is not an Object then nothing happens
  * @memberof config
- * @return {null}
+ * @return {void}
  */
 cfg.merge = function (obj) {
 	readDefaultConfigFiles();
@@ -136,10 +136,7 @@ cfg.merge = function (obj) {
 	if (obj instanceof Object) {
 		merge(config, obj);
 		merge(config, obj[`$env_${env()}`]);
-		return null;
 	}
-
-	return null;
 };
 
 /**
@@ -148,7 +145,7 @@ cfg.merge = function (obj) {
  * if obj is not an Object then nothing happens
  * @memberof config
  * @param {object} obj
- * @return {null}
+ * @return {void}
  */
 cfg.assign = function (obj) {
 	readDefaultConfigFiles();
@@ -156,9 +153,7 @@ cfg.assign = function (obj) {
 	if (obj instanceof Object) {
 		Object.assign(config, obj);
 		Object.assign(config, obj[`$env_${env()}`]);
-		return null;
 	}
-	return null;
 };
 
 /**
