@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "true",
-    "lint": "eslint cfg.js",
+    "lint": "eslint index.js browser.js",
     "test": "npm run lint && npm run test-only",
     "test-only": "NODE_ENV=test mocha --slow 0 --exit test/*.test.js",
     "compile": "tsc",
