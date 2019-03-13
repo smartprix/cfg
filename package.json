@@ -6,6 +6,9 @@
   "browser": {
     "./index.js": "./browser.js"
   },
+  "bin": {
+    "cfg": "bin/cfg.js"
+  },
   "scripts": {
     "build": "true",
     "lint": "eslint index.js browser.js",
