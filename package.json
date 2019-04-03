@@ -3,6 +3,7 @@
   "version": "1.1.4",
   "description": "Configuration management for node.js",
   "main": "index.js",
+  "types": "index.d.ts",
   "browser": {
     "./index.js": "./browser.js"
   },
