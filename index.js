@@ -106,7 +106,9 @@ cfg._getConfig = function () {
 /** set values in global config
  * you can also give key as an object to assign all key values from it
  * @memberof config
- * @return {any}
+ * @param {string | object} key
+ * @param {any} [value]
+ * @return {null | any}
  */
 cfg.set = function (key, value) {
 	readDefaultConfigFiles();
@@ -128,6 +130,7 @@ cfg.set = function (key, value) {
  * if a key already exists then it is merged with new value
  * if obj is not an Object then nothing happens
  * @memberof config
+ * @param {object} obj
  * @return {void}
  */
 cfg.merge = function (obj) {
@@ -158,6 +161,7 @@ cfg.assign = function (obj) {
 
 /**
  * @memberof config
+ * @param {string} key
  * @return {void}
  */
 cfg.delete = function (key) {

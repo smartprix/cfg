@@ -5,7 +5,7 @@ declare module '@smpx/cfg' {
 	 * @param key key to read, can be nested like `a.b.c`
 	 * @param defaultValue value to return if key is not found
 	 */
-	function cfg<T = any>(key: string, defaultValue?: T): T;
+	function cfg<T = any>(key: string, defaultValue?: T): Readonly<T>
 	
 	namespace cfg {
 		/**
@@ -13,13 +13,13 @@ declare module '@smpx/cfg' {
 		 * @param key
 		 * @param defaultValue
 		 */
-		function get<T = any>(key: string, defaultValue?: T): T;
+		function get<T = any>(key: string, defaultValue?: T): Readonly<T>;
 	
 		/**
 		 * Get the whole config object
 		 * **NOTE:** Is not immutable, so don't write anything to it
 		 */
-		function _getConfig(): {[key: string]: any};
+		function _getConfig(): Readonly<{[key: string]: any}>;
 	
 		/**
 		 * set values in global config
@@ -29,27 +29,25 @@ declare module '@smpx/cfg' {
 
 		/**
 		 * set values in global config
-		 * @param key key is an object to assign all key values from it
+		 * @param obj an object to assign all key values from it
 		 */
-		function set(obj: object): null;
-	
+		function set(obj: {[key: string]: any}): null;
 		/**
 		 * set values in global config with an object to assign all key values from it
 		 * if a key already exists then it is merged with new value
 		 * if obj is not an Object then nothing happens
 		 */
-		function merge(obj: object): void;
+		function merge(obj: {[key: string]: any}): null;
 	
 		/**
 		 * set values in global config with an object to assign all key values from it
 		 * if a key already exists then it is assigned with new value
 		 * if obj is not an Object then nothing happens
 		 */
-		function assign(obj: object): void;
+		function assign(obj: {[key: string]: any}): null;
 	
-		/* Illegal function name 'delete' can't be used here
-		delete: (key: string) => void;
-		*/
+		// FIXME: Illegal function name 'delete' can't be used here
+		// delete: (key: string) => void;
 	
 		/**
 		 * **NOT AVAILABLE IN BROWSER**
@@ -61,9 +59,9 @@ declare module '@smpx/cfg' {
 		 * @param options.overwrite Overwrite config not merge
 		 */
 		function file(file: string, options?: {
-			ignoreErrors: boolean,
-			ignoreNotFound: boolean,
-			overwrite: boolean
+			ignoreErrors?: boolean,
+			ignoreNotFound?: boolean,
+			overwrite?: boolean
 		}): void;
 	
 		/**
@@ -76,9 +74,12 @@ declare module '@smpx/cfg' {
 		/**
 		 * Returns current env
 		 */
-		function env(): string;
 		function getEnv(): string;
-	
+		/**
+		 * Returns current env
+		 */
+		function env(): string;
+
 		/**
 		 * Returns true if env is production
 		 */
