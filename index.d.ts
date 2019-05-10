@@ -6,7 +6,10 @@ declare module '@smpx/cfg' {
 	 * @param defaultValue value to return if key is not found
 	 */
 	function cfg<T = any>(key: string, defaultValue?: T): Readonly<T>
-	
+
+	// NOTE: Illegal function name 'delete' can't be used separately in namespace
+	cfg.delete = (key: string) => void;
+
 	namespace cfg {
 		/**
 		 * Reads a config value
@@ -14,13 +17,13 @@ declare module '@smpx/cfg' {
 		 * @param defaultValue
 		 */
 		function get<T = any>(key: string, defaultValue?: T): Readonly<T>;
-	
+
 		/**
 		 * Get the whole config object
 		 * **NOTE:** Is not immutable, so don't write anything to it
 		 */
 		function _getConfig(): Readonly<{[key: string]: any}>;
-	
+
 		/**
 		 * set values in global config
 		 * returns previous value
@@ -38,17 +41,13 @@ declare module '@smpx/cfg' {
 		 * if obj is not an Object then nothing happens
 		 */
 		function merge(obj: {[key: string]: any}): null;
-	
+
 		/**
 		 * set values in global config with an object to assign all key values from it
 		 * if a key already exists then it is assigned with new value
 		 * if obj is not an Object then nothing happens
 		 */
 		function assign(obj: {[key: string]: any}): null;
-	
-		// FIXME: Illegal function name 'delete' can't be used here
-		// delete: (key: string) => void;
-	
 		/**
 		 * **NOT AVAILABLE IN BROWSER**
 		 * read config from a file, and merge with existing config
@@ -63,14 +62,14 @@ declare module '@smpx/cfg' {
 			ignoreNotFound?: boolean,
 			overwrite?: boolean
 		}): void;
-	
+
 		/**
 		 * **NOT AVAILABLE IN BROWSER**
 		 * read the file specified by the key, and then cache it
 		 * @param key
 		 */
 		function read(key: string): any;
-	
+
 		/**
 		 * Returns current env
 		 */
@@ -86,15 +85,15 @@ declare module '@smpx/cfg' {
 		function isProduction(): boolean;
 		function isProd(): boolean;
 		function isStaging(): boolean;
-	
+
 		/**
 		 * Returns true if env is production or staging
 		 */
 		function isProductionLike(): boolean;
 		function isProdLike(): boolean;
-	
+
 		function isTest(): boolean;
-	
+
 		/**
 		 * returns true in environments not 'staging' or 'production'
 		 */
