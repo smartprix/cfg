@@ -99,6 +99,11 @@ declare module '@smpx/cfg' {
 		 */
 		function isDev(): boolean;
 		function isDevelopment(): boolean;
+
+		/**
+		 * returns true when process.env.CI is truthy
+		 */
+		function isCI(): boolean;
 	}
 
 	export default cfg;

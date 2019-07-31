@@ -76,8 +76,10 @@ function readDefaultConfigFiles() {
 
 	cfg.file(`${process.cwd()}/config.js`, {ignoreNotFound: true});
 	cfg.file(`${process.cwd()}/config.${env()}.js`, {ignoreNotFound: true});
+	if (cfg.isCI()) cfg.file(`${process.cwd()}/config.CI.js`, {ignoreNotFound: true});
 	cfg.file(`${process.cwd()}/private/config.js`, {ignoreNotFound: true});
 	cfg.file(`${process.cwd()}/private/config.${env()}.js`, {ignoreNotFound: true});
+	if (cfg.isCI()) cfg.file(`${process.cwd()}/private/config.CI.js`, {ignoreNotFound: true});
 
 	if (config.$privateConfigFile) {
 		cfg.file(config.$privateConfigFile, {ignoreNotFound: true});
@@ -139,6 +141,7 @@ cfg.merge = function (obj) {
 	if (obj instanceof Object) {
 		merge(config, obj);
 		merge(config, obj[`$env_${env()}`]);
+		if (cfg.isCI()) merge(config, obj.$env_CI);
 	}
 };
 
@@ -273,6 +276,10 @@ cfg.isTest = function () {
  */
 cfg.isDev = function () {
 	return (env() !== 'production') && (env() !== 'staging');
+};
+
+cfg.isCI = function () {
+	return !!process.env.CI;
 };
 
 /**
