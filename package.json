@@ -1,6 +1,6 @@
 {
   "name": "@smpx/cfg",
-  "version": "1.1.6",
+  "version": "1.2.0",
   "description": "Configuration management for node.js",
   "main": "index.js",
   "types": "index.d.ts",
