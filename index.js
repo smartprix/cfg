@@ -119,6 +119,7 @@ cfg.set = function (key, value) {
 	if (value === undefined && key instanceof Object) {
 		Object.assign(config, key);
 		Object.assign(config, key[`$env_${env()}`]);
+		if (cfg.isCI()) Object.assign(config, key.$env_CI);
 		return null;
 	}
 
@@ -159,6 +160,7 @@ cfg.assign = function (obj) {
 	if (obj instanceof Object) {
 		Object.assign(config, obj);
 		Object.assign(config, obj[`$env_${env()}`]);
+		if (cfg.isCI()) Object.assign(config, obj.$env_CI);
 	}
 };
 
@@ -278,6 +280,10 @@ cfg.isDev = function () {
 	return (env() !== 'production') && (env() !== 'staging');
 };
 
+/**
+ * @memberof config
+ * @return {boolean}
+ */
 cfg.isCI = function () {
 	return !!process.env.CI;
 };
