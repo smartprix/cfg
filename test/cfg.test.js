@@ -28,6 +28,7 @@ describe('cfg', () => {
 		expect(cfg.env()).to.equal('test');
 		expect(cfg.isTest()).to.equal(true);
 		expect(cfg.isDev()).to.equal(true);
+		expect(cfg.isCI()).to.equal(!!process.env.CI);
 	});
 
 	it('should allow to change env', () => {
@@ -35,8 +36,12 @@ describe('cfg', () => {
 		expect(cfg.isDev()).to.equal(false);
 		expect(cfg.isProd()).to.equal(true);
 		expect(cfg.isProdLike()).to.equal(true);
+		process.env.CI = '1';
+		expect(cfg.isCI()).to.equal(true);
 		process.env.NODE_ENV = 'test';
+		process.env.CI = '';
 		expect(cfg.isProd()).to.equal(false);
+		expect(cfg.isCI()).to.equal(false);
 	});
 
 	it('should get whole config object', async () => {
