@@ -7,9 +7,6 @@ declare module '@smpx/cfg' {
 	 */
 	function cfg<T = any>(key: string, defaultValue?: T): Readonly<T>
 
-	// NOTE: Illegal function name 'delete' can't be used separately in namespace
-	cfg.delete = (key: string) => void;
-
 	namespace cfg {
 		/**
 		 * Reads a config value
@@ -105,6 +102,10 @@ declare module '@smpx/cfg' {
 		 */
 		function isCI(): boolean;
 	}
+
+	// NOTE: Illegal function name 'delete' can't be used separately in namespace
+	// FIXME: Typescript gives error
+	// cfg.delete =  (key: string) => void
 
 	export default cfg;
 }
