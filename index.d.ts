@@ -107,5 +107,5 @@ declare module '@smpx/cfg' {
 	// FIXME: Typescript gives error
 	// cfg.delete =  (key: string) => void
 
-	export default cfg;
+	export = cfg;
 }
