@@ -49,4 +49,37 @@ describe('cfg', () => {
 			test: 'data',
 		});
 	});
+
+	it('should correctly merge objects & arrays', () => {
+		cfg.merge({
+			testMerge: {
+				a: {
+					a1: [1, {a11: 2}, 3],
+					a2: 'a21',
+					a3: {a31: 'x', a32: [1, 2]}
+				},
+				get b() { return {b1: 1} },
+				c: 1,
+			},
+		});
+		cfg.merge({
+			testMerge: {
+				a: {
+					a1: [{a11: 3}],
+					a3: {a32: [1, 2], a33: 'x'},
+				},
+				get b() { return {b2: this.a.a1[0].a11} },
+				c: {c1: 1},
+			},
+		});
+		expect(cfg('testMerge')).to.deep.equal({
+			a: {
+				a1: [{a11: 3}],
+				a2: 'a21',
+				a3: {a31: 'x', a32: [1, 2], a33: 'x'},
+			},
+			b: {b2: 3},
+			c: {c1: 1},
+		});
+	});
 });

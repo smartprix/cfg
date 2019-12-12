@@ -15,7 +15,7 @@ const env = function () {
  */
 
 function isObject(obj) {
-	return obj === Object(obj);
+	return Object.prototype.toString.call(obj) === '[object Object]';
 }
 
 // merge configs, takes care of getters while merging
