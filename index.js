@@ -1,3 +1,4 @@
+const path = require('path');
 const fs = require('fs');
 const _ = require('lodash');
 
@@ -74,12 +75,14 @@ function readDefaultConfigFiles() {
 	if (config) return;
 	config = {};
 
-	cfg.file(`${process.cwd()}/config.js`, {ignoreNotFound: true});
-	cfg.file(`${process.cwd()}/config.${env()}.js`, {ignoreNotFound: true});
-	if (cfg.isCI()) cfg.file(`${process.cwd()}/config.CI.js`, {ignoreNotFound: true});
-	cfg.file(`${process.cwd()}/private/config.js`, {ignoreNotFound: true});
-	cfg.file(`${process.cwd()}/private/config.${env()}.js`, {ignoreNotFound: true});
-	if (cfg.isCI()) cfg.file(`${process.cwd()}/private/config.CI.js`, {ignoreNotFound: true});
+	const cwd = process.cwd();
+	const privatePath = path.join(cwd, 'private');
+	cfg.file(path.join(cwd, 'config.js'), {ignoreNotFound: true});
+	cfg.file(path.join(cwd, `config.${env()}.js`), {ignoreNotFound: true});
+	if (cfg.isCI()) cfg.file(path.join(cwd, 'config.CI.js'), {ignoreNotFound: true});
+	cfg.file(path.join(privatePath, 'config.js'), {ignoreNotFound: true});
+	cfg.file(path.join(privatePath, `config.${env()}.js`), {ignoreNotFound: true});
+	if (cfg.isCI()) cfg.file(path.join(privatePath, 'config.CI.js'), {ignoreNotFound: true});
 
 	if (config.$privateConfigFile) {
 		cfg.file(config.$privateConfigFile, {ignoreNotFound: true});
@@ -184,7 +187,7 @@ cfg.delete = function (key) {
  * @param {boolean} options.overwrite Overwrite config not merge
  */
 cfg.file = function (file, options = {}) {
-	if (!file.startsWith('/')) {
+	if (!path.isAbsolute(file)) {
 		throw new Error('Only absolute paths are allowed');
 	}
 
