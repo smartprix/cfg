@@ -14,6 +14,9 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
+    - name: git config
+      run: git config --global core.autocrlf false
+
     - uses: actions/checkout@v1
 
     - name: Use Node.js 12.x
