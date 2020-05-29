@@ -1,12 +1,17 @@
-name: Tests-Windows
+name: Tests
 
 on:
 - pull_request
 - push
 
 jobs:
-  build:
-    runs-on: windows-latest
+  tests:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: [10, 12, 14]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v1
@@ -14,7 +19,7 @@ jobs:
     - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
-        node-version: 12.x
+        node-version: ${{ matrix.node }}
 
     - name: Install node_modules
       run: yarn
