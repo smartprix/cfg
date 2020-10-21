@@ -67,7 +67,16 @@ function readEnvVariables() {
 	const vals = Object.keys(process.env).filter(val => val.indexOf('CFG__') === 0);
 	vals.forEach((val) => {
 		const key = val.slice(5).split('__').map(el => _.camelCase(el)).join('.');
-		cfg.set(key, process.env[val]);
+		let envVal = process.env[val];
+		if (envVal && envVal.startsWith('@JSON:')) {
+			try {
+				envVal = JSON.parse(envVal.substring(6));
+			}
+			catch (e) {
+				console.error(`Error while parsing JSON value of env variable ${val}`);
+			}
+		}
+		cfg.set(key, envVal);
 	});
 }
 
