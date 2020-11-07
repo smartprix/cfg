@@ -32,10 +32,10 @@ declare module '@smpx/cfg' {
 
 		/**
 		 * Reads a config value
-		 * @param key
+		 * @param key key to read, can be nested like `a.b.c`
 		 * @param defaultValue
 		 */
-		function get<P extends string, T = unknown>(key: P, defaultValue?: T): Readonly<T>
+		function get<P extends string, T = unknown>(key: P, defaultValue?: T): ReadonlyConsts<T>
 
 		/**
 		 * Get the whole config object
