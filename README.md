@@ -113,21 +113,6 @@ declare global {
 }
 ```
 
-Or omit the $env keys:
-
-```ts
-// global.d.ts
-import { ConfigType } from './config';
-
-type ConfigTypeOmit = Omit<ConfigType, '$env_development' | '$env_production'>;
-
-declare global {
-    interface BaseConfig extends ConfigTypeOmit {
-       envVarOnlyKey?: string;
-    }
-}
-```
-
 ## CLI
 
 Get a value from cfg.js

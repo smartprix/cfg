@@ -1,5 +1,11 @@
 interface BaseConfig {}
 
+type ExcludeEnv<B> = Omit<B, '$env_development' | '$env_test' | '$env_CI' | '$env_staging' | '$env_production'>;
+
+type ReadonlyConsts<T> = T extends (...args: any[]) => any ? T : Readonly<T>;
+
+type ConfigKeys<B> = keyof ExcludeEnv<B>;
+
 declare module '@smpx/cfg' {
 
 	/**
@@ -7,14 +13,14 @@ declare module '@smpx/cfg' {
 	 * @param key key to read, can be nested like `a.b.c`
 	 * @param defaultValue value to return if key is not found
 	 */
-	function cfg<P extends (keyof BaseConfig)>(key: P, defaultValue?: BaseConfig[P]): Readonly<BaseConfig[P]>
+	function cfg<P extends ConfigKeys<BaseConfig>>(key: P, defaultValue?: BaseConfig[P]): ReadonlyConsts<BaseConfig[P]>
 
 	/**
 	 * Reads a config value
 	 * @param key key to read, can be nested like `a.b.c`
 	 * @param defaultValue value to return if key is not found
 	 */
-	function cfg<P extends string, T = unknown>(key: P, defaultValue?: T): Readonly<T>
+	function cfg<P extends string, T = unknown>(key: P, defaultValue?: T): ReadonlyConsts<T>
 
 	namespace cfg {
 		/**
@@ -22,7 +28,7 @@ declare module '@smpx/cfg' {
 		 * @param key
 		 * @param defaultValue
 		 */
-		function get<P extends (keyof BaseConfig)>(key: P, defaultValue?: BaseConfig[P]): Readonly<BaseConfig[P]>
+		function get<P extends ConfigKeys<BaseConfig>>(key: P, defaultValue?: BaseConfig[P]): ReadonlyConsts<BaseConfig[P]>
 
 		/**
 		 * Reads a config value
