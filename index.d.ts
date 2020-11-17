@@ -1,3 +1,11 @@
+interface BaseConfig {}
+
+type ExcludeEnv<B> = Omit<B, '$env_development' | '$env_test' | '$env_CI' | '$env_staging' | '$env_production'>;
+
+type ReadonlyConsts<T> = T extends (...args: any[]) => any ? T : Readonly<T>;
+
+type ConfigKeys<B> = keyof ExcludeEnv<B>;
+
 declare module '@smpx/cfg' {
 
 	/**
@@ -5,7 +13,14 @@ declare module '@smpx/cfg' {
 	 * @param key key to read, can be nested like `a.b.c`
 	 * @param defaultValue value to return if key is not found
 	 */
-	function cfg<T = any>(key: string, defaultValue?: T): Readonly<T>
+	function cfg<P extends ConfigKeys<BaseConfig>>(key: P, defaultValue?: BaseConfig[P]): ReadonlyConsts<BaseConfig[P]>
+
+	/**
+	 * Reads a config value
+	 * @param key key to read, can be nested like `a.b.c`
+	 * @param defaultValue value to return if key is not found
+	 */
+	function cfg<P extends string, T = unknown>(key: P, defaultValue?: T): ReadonlyConsts<T>
 
 	namespace cfg {
 		/**
@@ -13,13 +28,20 @@ declare module '@smpx/cfg' {
 		 * @param key
 		 * @param defaultValue
 		 */
-		function get<T = any>(key: string, defaultValue?: T): Readonly<T>;
+		function get<P extends ConfigKeys<BaseConfig>>(key: P, defaultValue?: BaseConfig[P]): ReadonlyConsts<BaseConfig[P]>
+
+		/**
+		 * Reads a config value
+		 * @param key key to read, can be nested like `a.b.c`
+		 * @param defaultValue
+		 */
+		function get<P extends string, T = unknown>(key: P, defaultValue?: T): ReadonlyConsts<T>
 
 		/**
 		 * Get the whole config object
 		 * **NOTE:** Is not immutable, so don't write anything to it
 		 */
-		function _getConfig(): Readonly<{[key: string]: any}>;
+		function _getConfig(): Readonly<BaseConfig>;
 
 		/**
 		 * set values in global config

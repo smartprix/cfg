@@ -68,7 +68,50 @@ Similarly in CI environments, the value in `$env_CI` is merged.
 
 ## API
 
-Please check out the typescript definition file: [index.d.ts](./index.d.ts) for a overwview of all the functions provided.
+Please check out the typescript definition file: [index.d.ts](./index.d.ts) for an overview of all the functions provided.
+
+### Typescript
+
+For getting types of the output types, you can define a typedef in your `config.js` file like:
+
+```js
+//config.js
+
+const config = {
+    db: {
+        password: 'abcde',
+        host: '127.0.0.1',
+    },
+};
+
+/** @typedef {typeof config} ConfigType */
+
+module.exports = config;
+```
+
+And in a global typings file in your project, like `global.d.ts`, import it and set this as the BaseConfig:
+
+```ts
+// global.d.ts
+import { ConfigType } from './config';
+
+declare global {
+  interface BaseConfig extends ConfigType {}
+}
+```
+
+This will be automatically picked by cfg. You can also modify this type with some custom keys available only through env vars:
+
+```ts
+// global.d.ts
+import { ConfigType } from './config';
+
+declare global {
+    interface BaseConfig extends ConfigType {
+       envVarOnlyKey?: string;
+    }
+}
+```
 
 ## CLI
 
