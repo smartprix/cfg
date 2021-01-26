@@ -13,3 +13,5 @@ jsdoc.json
 out
 .travis.yml
 bench
+example
+.github
